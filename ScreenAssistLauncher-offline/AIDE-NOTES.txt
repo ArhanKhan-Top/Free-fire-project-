@@ -2,8 +2,9 @@ AIDE / Android Java notes
 
 - Native Java/XML source; package: com.screenassist.launcher.
 - Minimum SDK 23; target SDK 32; project.properties targets Android SDK Platform 32.
-- TensorFlow Lite 2.14.0 is required. Run `sh scripts/setup_aide_tflite.sh` to fetch its AAR, extract classes.jar to libs/, and unpack the JNI libraries under jni/.
-- Confirm that your AIDE version packages the correct JNI library for the device ABI (the Galaxy Note10+ is ARM64). A plain classes.jar without its matching native runtime is not a complete runtime setup.
-- Run `sh scripts/download_model.sh` to fetch and SHA-256 verify the Apache-2.0 EfficientDet-Lite0 COCO model into assets/.
-- If AIDE cannot package the TFLite JNI library, use Android Studio/Gradle with the declared Maven dependency.
+- TensorFlow Lite 2.14.0 is required. Run `sh scripts/setup_aide_tflite.sh` to download the official Maven Central AAR and its separate API JAR.
+- The setup script extracts libs/tensorflow-lite.jar, installs libs/tensorflow-lite-api.jar, and extracts the arm64-v8a JNI runtime under jni/.
+- The Galaxy Note10+ uses the arm64-v8a ABI. The matching libtensorflowlite_jni.so must be packaged in the APK; a Java JAR alone is not a complete runtime.
+- The Gradle build uses the Maven dependency, which resolves its API dependency transitively.
+- Model installation is a separate step and is not included in this runtime-library setup.
 - The app processes only images explicitly selected by the user. No MediaProjection, foreground capture service, game package lookup, or floating overlay code is included.
