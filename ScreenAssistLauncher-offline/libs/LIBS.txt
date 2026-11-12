@@ -1,0 +1,18 @@
+TensorFlow Lite runtime setup
+
+Gradle builds use the dependency declared in app/build.gradle:
+  org.tensorflow:tensorflow-lite:2.14.0
+
+For the legacy AIDE/Eclipse project, run:
+  sh scripts/setup_aide_tflite.sh
+
+The script downloads the matching 2.14.0 AAR, extracts classes.jar to
+libs/tensorflow-lite.jar (already referenced by .classpath), and extracts
+any packaged JNI libraries into jni/. A plain JAR is not a complete runtime:
+verify that AIDE packages the native library for the target ABI.
+
+Model setup:
+  sh scripts/download_model.sh
+
+The model is Apache-2.0 licensed and is fetched separately from the source
+archive. See assets/MODEL-SETUP.md.
