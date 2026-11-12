@@ -2,9 +2,16 @@ AIDE / Android Java notes
 
 - Native Java/XML source; package: com.screenassist.launcher.
 - Minimum SDK 23; target SDK 32; project.properties targets Android SDK Platform 32.
-- TensorFlow Lite 2.14.0 is required. Run `sh scripts/setup_aide_tflite.sh` to download the official Maven Central AAR and its separate API JAR.
-- The setup script extracts libs/tensorflow-lite.jar, installs libs/tensorflow-lite-api.jar, and extracts the arm64-v8a JNI runtime under jni/.
-- The Galaxy Note10+ uses the arm64-v8a ABI. The matching libtensorflowlite_jni.so must be packaged in the APK; a Java JAR alone is not a complete runtime.
-- The Gradle build uses the Maven dependency, which resolves its API dependency transitively.
-- Model installation is a separate step and is not included in this runtime-library setup.
+- The project classpath already references libs/tensorflow-lite.jar and libs/tensorflow-lite-api.jar.
+- Download ScreenAssist-TFLite-AIDE-dependencies.zip and extract it directly into this project root, choosing merge/replace if prompted. The ZIP supplies both JARs and the arm64-v8a JNI runtime.
+- Required files after extraction:
+  - libs/tensorflow-lite.jar
+  - libs/tensorflow-lite-api.jar
+  - libs/arm64-v8a/libtensorflowlite_jni.so
+  - app/src/main/jniLibs/arm64-v8a/libtensorflowlite_jni.so
+- The two JARs contain org.tensorflow.lite.Interpreter, Interpreter.Options, and DataType. The ARM64 native library is required when the interpreter runs.
+- Close and reopen the project after extracting the dependencies so AIDE refreshes its Java classpath. If the project is opened as an ordinary folder, import/open the ScreenAssistLauncher-offline Android project root so its .project and .classpath files are used.
+- Alternatively, run sh scripts/setup_aide_tflite.sh from a shell with curl and unzip; it installs the same files.
+- The Gradle build uses TensorFlow Lite 2.14.0 from Maven Central; the setup script also places the JNI library in Gradle's app/src/main/jniLibs path.
+- Model installation is separate from runtime-library setup.
 - The app processes only images explicitly selected by the user. No MediaProjection, foreground capture service, game package lookup, or floating overlay code is included.
