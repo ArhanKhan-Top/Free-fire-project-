@@ -13,8 +13,10 @@ A native Android Java/XML app for selecting a local image, running TensorFlow Li
 ## TensorFlow Lite setup
 
 - Gradle: the app uses TensorFlow Lite 2.14.0 from Maven Central; Gradle resolves the matching API dependency.
-- AIDE: run `sh scripts/setup_aide_tflite.sh`. It installs both Java JAR dependencies and extracts the ARM64 JNI runtime required by the Galaxy Note10+.
-- Model installation is separate from the TensorFlow Lite runtime. Do not treat the runtime setup as proof that a model is installed or compatible.
+- AIDE: extract the separate `ScreenAssist-TFLite-AIDE-dependencies.zip` bundle directly into this project root. It supplies both Java JARs and the ARM64 JNI library in the AIDE and Gradle paths.
+- The project `.classpath` already references both JARs. Reopen the project after extracting the bundle so AIDE refreshes its classpath.
+- Alternatively, run `sh scripts/setup_aide_tflite.sh` from a shell with `curl` and `unzip`.
+- Model installation is separate from TensorFlow Lite runtime setup. Runtime libraries alone do not mean a model is installed or compatible.
 
 ## Build requirements
 
