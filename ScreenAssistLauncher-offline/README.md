@@ -5,15 +5,19 @@ A native Android Java/XML app for selecting a local image, running TensorFlow Li
 ## Features
 
 - Opens a local image through Android's system document picker.
-- Runs generic EfficientDet-Lite0 COCO inference on a single background worker.
-- Uses aspect-ratio-preserving letterbox preprocessing, output tensor-shape validation, confidence filtering, class-aware NMS, and an annotation preview.
+- Runs generic object detection on a single background worker.
+- Uses aspect-ratio-preserving preprocessing, output tensor-shape validation, confidence filtering, class-aware NMS, and an annotation preview.
 - Saves the annotated result through Android's document picker.
 - Processes only the image the user explicitly selects. It does not capture the display, run a foreground capture service, create floating windows, or connect to another app.
 
-## Setup
+## TensorFlow Lite setup
 
-1. Install the model: `sh scripts/download_model.sh` (Apache-2.0; checksum verified).
-2. Build with Android Gradle Plugin 7.4.2, Gradle 7.5, JDK 11, Android SDK Platform 32, and TensorFlow Lite 2.14.0.
-3. For AIDE, run `sh scripts/setup_aide_tflite.sh` and verify that AIDE packages the correct JNI library for the target ABI. If it cannot, build with Android Studio/Gradle.
+- Gradle: the app uses TensorFlow Lite 2.14.0 from Maven Central; Gradle resolves the matching API dependency.
+- AIDE: run `sh scripts/setup_aide_tflite.sh`. It installs both Java JAR dependencies and extracts the ARM64 JNI runtime required by the Galaxy Note10+.
+- Model installation is separate from the TensorFlow Lite runtime. Do not treat the runtime setup as proof that a model is installed or compatible.
 
-The model is generic COCO object detection. It is not trained for game characters or any specialised domain, and no accuracy claim is made for game screenshots.
+## Build requirements
+
+Android Gradle Plugin 7.4.2, Gradle 7.5, JDK 11, and Android SDK Platform 32.
+
+The app is an offline local-image annotator. It is not a live game-screen analysis tool.
