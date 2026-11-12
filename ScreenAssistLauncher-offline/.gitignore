@@ -1,0 +1,12 @@
+.gradle/
+local.properties
+build/
+app/build/
+bin/
+gen/
+*.iml
+*.jks
+*.keystore
+keystore.properties
+captures/
+assets/*.tflite
